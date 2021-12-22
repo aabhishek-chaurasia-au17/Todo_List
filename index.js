@@ -4,29 +4,24 @@ const inputTaskBox = document.querySelector('#inputBox')
 const addtaskBtn = document.querySelector('#addBtn')
 const validtext = document.querySelector("#valid-text")
 const todo_list = document.querySelector(".todo-list")
-// const delete_item = querySelector('.delete-item')
-const todoComplited = document.querySelector(".todo-done-list")
-
+const todocompleted = document.querySelector(".todo-done-list")
+const todoDeleted = document.querySelector(".todo-delete-list")
 
 let tasks = []
-// let completeTodo = []
-
-function getTask() {
-    addBtn.addEventListener('click', onClickGetTask)
-}
+let completeTodo = []
+let deletedTodo = []
 
 function onClickGetTask() {
-      const task = inputTaskBox.value
-      if(!task){
-        inputTaskBox.style.borderColor = "red";
-        validtext.setAttribute("style", "display:block")
-      }else{
-          inputTaskBox.style.border = "none"; 
-          validtext.setAttribute("style", "display:none")
-          addTasks(task) 
-          printTodos()
-      } 
-}   
+    const task = inputTaskBox.value
+
+    if(!task){
+        inputTaskBox.classList.add('is-invalid')
+    }else{
+        inputTaskBox.classList.remove('is-invalid')
+        addTasks(task) 
+        renderTodos() 
+    }
+}
 
 function addTasks(task) {
     const todo = task
@@ -36,44 +31,47 @@ function addTasks(task) {
     })
 }
 
-function printTodos() {
-    // const task_el = document.createElement("li");
-    // todo_list.appendChild(task_el);
-    // task_el.classList.add(`list-group-item`)
-    // task_el.classList.add(`mt-1`)
-    
-    // for (let i = 0; i < tasks.length; i++) {
-    //     task_el.innerText = tasks[i].task;
-    // }
+function renderTodos() {
     todo_list.innerHTML = ''
 
-    tasks.forEach((item) => {
+    tasks.forEach((item, index) => {
         todo_list.insertAdjacentHTML('beforeend', `<li class="item list-group-item my-1"> <div class="row">
-        <div class="col-10"><b>${item.task}</b> created at ${item.createdOn}</div>
-        <div class="col-1"><a href="#" class="complete-item mx-2 item-icon"><i class="bi bi-check2-circle"></i></a> </div>
-        <div class="col-1"><a href="#" class="delete-item item-icon"><i class="bi bi-x-circle"></i></a></div></div>
-        </li>` );
+        <div class="col-10 d-flex align-items-center"><b>${item.task } </b> created at ${ item.createdOn}</div>
+        <div class="col-1"><button type="button" onclick="completedTodo(${index})" class="btn complete-item item-icon"><i class="bi bi-check2-circle"></i></button> </div>
+        <div class="col-1"><button type="button" onclick="deleteTodo(${index})" class="btn delete-item item-icon"><i class="bi bi-x-circle"></i></button></div></div>
+        </li>`);
+    });
 
-        deleteTodo(item)
+}
+
+function deleteTodo(itemIndex){
+    deletedTodo.push({ ...tasks[itemIndex] })
+    tasks = tasks.filter((_, index) => index !== itemIndex)
+    renderTodos()
+    showDeletedTodo()
+}
+
+function completedTodo(itemIndex) {
+    completeTodo.push({ ...tasks[itemIndex] }  )
+    tasks = tasks.filter((_, index) => index !== itemIndex)
+    renderTodos()
+    showCompletedTodo()
+}
+
+
+function showCompletedTodo() {
+    completeTodo.forEach((item, index) => {
+        todocompleted.insertAdjacentHTML('beforeend', `<li class="item list-group-item my-1"> <div class="row">
+        <div class="col-10 d-flex align-items-center"><b>${item.task} </b> created at ${item.createdOn}</div>
+        </div></li>`);
     });
 }
 
-function deleteTodo(itemName){
-    const items = todo_list.querySelectorAll('.item');
-    
-    console.log(tasks);
-        items.forEach((item) => {
-            item.querySelector('.delete-item').addEventListener('click', function(){
-            todo_list.removeChild(item)
-            tasks = tasks.filter((item) => {
-                return item !== itemName
-            })
-        })
-    })
+
+function showDeletedTodo() {
+    deletedTodo.forEach((item, index) => {
+        todoDeleted.insertAdjacentHTML('beforeend', `<li class="item list-group-item my-1"> <div class="row">
+        <div class="col-10 d-flex align-items-center"><b>${item.task} </b> created at ${item.createdOn}</div>
+        </div></li>`);
+    });
 }
-// function complitedTodo() {
-    
-// }
-
-
-getTask()

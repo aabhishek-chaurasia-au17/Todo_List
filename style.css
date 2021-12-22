@@ -10,3 +10,15 @@ body{
     font-family: 'Poppins', sans-serif;
     margin-top: 50px;
 }
+
+.complete-item {
+  color: #8cd6b2;
+}
+
+.complete-item:hover {
+  color: #8cd6b2;
+}
+
+.visibility {
+  opacity: 0.5;
+}
