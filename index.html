@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
@@ -20,11 +19,7 @@
                 <h1 class="text-center">My To Do List</h1>
                 <div class="input-group mt-4">
                     <input type="text" class="form-control" id="inputBox" placeholder="Add Task">
-                    <button class="btn btn-success px-5" onclick="onClickGetTask()" id="addBtn"
-                        type="button">Add</button>
-                    <div class="col-12 text-danger mt-2" id="valid-text" style="display: none;">
-                        Please provide a valid Task
-                    </div>
+                    <button class="btn btn-success px-5" onclick="addtodo()" id="addBtn" type="button">Add</button>
                 </div>
                 <div class="col-12 mt-5">
                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -37,11 +32,6 @@
                             <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
                                 aria-selected="false">Complited Task</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact"
-                                aria-selected="false">Delete Task</button>
                         </li>
                     </ul>
                     <div class="tab-content" id="pills-tabContent">
@@ -57,18 +47,10 @@
 
                             </ul>
                         </div>
-                        <div class="tab-pane fade" id="pills-contact" role="tabpanel"
-                            aria-labelledby="pills-contact-tab">
-                            <ul class="todo-delete-list list-group">
-
-                            </ul>
-                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
