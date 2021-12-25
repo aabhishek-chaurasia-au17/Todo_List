@@ -47,16 +47,16 @@ function setEmptyInput() {
 }
 
 function renderTodos() {
-    todo_list.innerHTML = ''
-    todocompleted.innerHTML = ''
+    todo_list.innerHTML = ""
+    todocompleted.innerHTML = ""
 
-    function displayTodos(item, index) {
-       let htmlCode = `<li class="item list-group-item my-1"> <div class="row">
+    function showTask(item, index) {
+       let sethtmlCode = `<li class="item list-group-item my-1"> <div class="row">
             <div class="col-10 d-flex align-items-center"><b class="col-2">${item.task} </b> <span class="col-10 text-center"> ${item.createdOn} </span></div>
             <div class="col-1"><button type="button" onclick="completedTodo(${index})" class="btn complete-item item-icon"><i class="bi bi-check2-circle"></i></button> </div>
-            <div class="col-1"><button type="button" onclick="deleteTodo(${index})" class="btn delete-item item-icon"><i class="bi bi-x-circle"></i></button></div></div>
+            <div class="col-1"><button type="button" onclick="deleteTodo(${index})" class="btn delete-item text-danger item-icon"><i class="bi bi-x-circle"></i></button></div></div>
         </li>`
-        return htmlCode;
+        return sethtmlCode;
     }
 
     let tasksHtmlList = "";
@@ -64,11 +64,11 @@ function renderTodos() {
     
     tasks.forEach((item, index) => {
         if(item.isDone === true){
-            let code = displayTodos(item, index)
-            completTaskHtmlList += code
+            let htmlCode = showTask(item, index)
+            completTaskHtmlList += htmlCode
         }else{
-            let code = displayTodos(item, index)
-            tasksHtmlList += code
+            let htmlCode = showTask(item, index)
+            tasksHtmlList += htmlCode
         }
     });
 
