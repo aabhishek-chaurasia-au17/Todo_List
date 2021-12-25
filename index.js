@@ -14,7 +14,7 @@ function addtodo() {
         inputTaskBox.classList.add('is-invalid')
     }else{
         inputTaskBox.classList.remove('is-invalid')
-        setEmptyInput(task)
+        setEmptyInput()
         addTasks(task) 
         renderTodos() 
     }
@@ -23,21 +23,21 @@ function addtodo() {
 function onInputEnter() {
     inputTaskBox.onkeyup = function (e) {
     if (e.key === 'Enter') {
-        addtaskBtn.click();
+        addtodo();
         }
     }
 }
 onInputEnter()
 
 
-function setEmptyInput(task) {
-    task = inputTaskBox.value = ""
+function setEmptyInput() {
+    inputTaskBox.value = ""
 }
 
 function addTasks(task) {
-    const todo = task
+    
     tasks.push({
-        task : todo,
+        task,
         createdOn: new Date(),
         isDone: false,
     })
@@ -45,9 +45,10 @@ function addTasks(task) {
 
 function renderTodos() {
     todo_list.innerHTML = ''
+    todocompleted.innerHTML = ''
 
     tasks.forEach((item, index) => {
-        if(tasks.isDone === true){
+        if(item.isDone === true){
         todocompleted.insertAdjacentHTML('beforeend', `<li class="item list-group-item my-1"> <div class="row">
             <div class="col-10 d-flex align-items-center"><b>${item.task} </b> created at ${ item.createdOn}</div></div>
         </li>`);
@@ -68,7 +69,9 @@ function deleteTodo(itemIndex){
 }
 
 function completedTodo(itemIndex) {
-    tasks = tasks.filter((_, index) => index !== itemIndex)
-    tasks.isDone = true
+    const task = tasks[itemIndex] 
+    task.isDone = true 
+    tasks[itemIndex] = task
+
     renderTodos()
 }
