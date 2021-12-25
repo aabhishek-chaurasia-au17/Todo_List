@@ -15,9 +15,21 @@ function addtodo() {
     }else{
         inputTaskBox.classList.remove('is-invalid')
         setEmptyInput()
-        addTasks(task) 
+        tasks.push({
+            task,
+            createdOn: creatDate(),
+            isDone: false
+        })
         renderTodos() 
     }
+}
+
+function creatDate() {
+    const date = new Date();
+    const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
+    const [hour, minutes, seconds] = [date.getHours(), date.getMinutes(), date.getSeconds()]
+
+    return `${day}/${month}/${year} at ${hour}:${minutes}:${seconds}`
 }
 
 function onInputEnter() {
@@ -34,33 +46,34 @@ function setEmptyInput() {
     inputTaskBox.value = ""
 }
 
-function addTasks(task) {
-    
-    tasks.push({
-        task,
-        createdOn: new Date(),
-        isDone: false,
-    })
-}
-
 function renderTodos() {
     todo_list.innerHTML = ''
     todocompleted.innerHTML = ''
 
-    tasks.forEach((item, index) => {
-        if(item.isDone === true){
-        todocompleted.insertAdjacentHTML('beforeend', `<li class="item list-group-item my-1"> <div class="row">
-            <div class="col-10 d-flex align-items-center"><b>${item.task} </b> created at ${ item.createdOn}</div></div>
-        </li>`);
-        }else{
-        todo_list.insertAdjacentHTML('beforeend', `<li class="item list-group-item my-1"> <div class="row">
-            <div class="col-10 d-flex align-items-center"><b>${item.task} </b> created at ${ item.createdOn}</div>
+    function displayTodos(item, index) {
+       let htmlCode = `<li class="item list-group-item my-1"> <div class="row">
+            <div class="col-10 d-flex align-items-center"><b class="col-2">${item.task} </b> <span class="col-10 text-center"> ${item.createdOn} </span></div>
             <div class="col-1"><button type="button" onclick="completedTodo(${index})" class="btn complete-item item-icon"><i class="bi bi-check2-circle"></i></button> </div>
             <div class="col-1"><button type="button" onclick="deleteTodo(${index})" class="btn delete-item item-icon"><i class="bi bi-x-circle"></i></button></div></div>
-        </li>`)
+        </li>`
+        return htmlCode;
+    }
+
+    let tasksHtmlList = "";
+    let completTaskHtmlList = "";
+    
+    tasks.forEach((item, index) => {
+        if(item.isDone === true){
+            let code = displayTodos(item, index)
+            completTaskHtmlList += code
+        }else{
+            let code = displayTodos(item, index)
+            tasksHtmlList += code
         }
     });
 
+    todo_list.innerHTML = tasksHtmlList
+    todocompleted.innerHTML = completTaskHtmlList
 }
 
 function deleteTodo(itemIndex){
