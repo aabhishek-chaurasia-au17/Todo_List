@@ -7,6 +7,8 @@ const todocompleted = document.querySelector(".todo-done-list")
 
 let tasks = []
 
+onInputEnter()
+
 function addtodo() {
     let task = inputTaskBox.value
      
@@ -17,14 +19,14 @@ function addtodo() {
         setEmptyInput()
         tasks.push({
             task,
-            createdOn: creatDate(),
+            createdOn: createDate(),
             isDone: false
         })
         renderTodos() 
     }
 }
 
-function creatDate() {
+function createDate() {
     const date = new Date();
     const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
     const [hour, minutes, seconds] = [date.getHours(), date.getMinutes(), date.getSeconds()]
@@ -39,8 +41,6 @@ function onInputEnter() {
         }
     }
 }
-onInputEnter()
-
 
 function setEmptyInput() {
     inputTaskBox.value = ""
@@ -51,12 +51,12 @@ function renderTodos() {
     todocompleted.innerHTML = ""
 
     function showTask(item, index) {
-       let sethtmlCode = `<li class="item list-group-item my-1"> <div class="row">
-            <div class="col-10 d-flex align-items-center"><b class="col-2">${item.task} </b> <span class="col-10 text-center"> ${item.createdOn} </span></div>
+       return `<li class="item list-group-item my-1"> <div class="row">
+            <div class="col-9 d-flex align-items-center"><b class="col-2 edit_text">${item.task} </b> <span class="col-10 text-center"> ${item.createdOn} </span></div>
+            <div class="col-1"><button type="button" onclick="editodo(${index})" class="btn complete-item item-icon"><i class="bi bi-pencil-square"></i></button> </div>
             <div class="col-1"><button type="button" onclick="completedTodo(${index})" class="btn complete-item item-icon"><i class="bi bi-check2-circle"></i></button> </div>
             <div class="col-1"><button type="button" onclick="deleteTodo(${index})" class="btn delete-item text-danger item-icon"><i class="bi bi-x-circle"></i></button></div></div>
         </li>`
-        return sethtmlCode;
     }
 
     let tasksHtmlList = "";
@@ -87,4 +87,13 @@ function completedTodo(itemIndex) {
     tasks[itemIndex] = task
 
     renderTodos()
+}
+
+function editodo(itemIndex) {
+    const task = tasks[itemIndex] 
+    let a = document.querySelector(".edit_text")
+    a.contentEditable = "true";
+    task.task = a
+    console.log(task.task = a);
+    tasks[itemIndex] = task
 }
