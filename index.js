@@ -52,7 +52,7 @@ function renderTodos() {
             <div class="col-9 d-flex align-items-center">
             <b class="col-4 edit_text${index}">${item.task}</b>
             <div class="input-group mb-3 d-none edit-box${index}" id="editInput">
-                <input type="text" class="form-control" id="newEditText" placeholder="Add Task">
+                <input type="text" class="form-control" id="newEditText" value="${item.task}" placeholder="Add Task">
                 <button class="btn btn-outline-secondary" type="button" onclick="saveOnEdit(${index})" id="button-addon2">Save</button>
             </div> 
             
@@ -95,14 +95,11 @@ function completedTodo(itemIndex) {
 }
 
 function editodo(itemIndex) {
-    
+    const task = tasks[itemIndex]
     const editTextBox = document.querySelector(`.edit_text${itemIndex}`)
     editTextBox.classList.add('d-none')
     const editInputBox = document.querySelector(`.edit-box${itemIndex}`)
     editInputBox.classList.remove('d-none')   
-
-    // const a = document.querySelector("#newEditText")
-    // console.log(a.value);
 }
 
 
