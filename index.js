@@ -5,6 +5,7 @@ const validtext = document.querySelector("#valid-text")
 const todo_list = document.querySelector(".todo-list")
 const todocompleted = document.querySelector(".todo-done-list")
 
+
 let tasks = []
 
 onInputEnter()
@@ -27,11 +28,7 @@ function addtodo() {
 }
 
 function createDate() {
-    const date = new Date();
-    const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
-    const [hour, minutes, seconds] = [date.getHours(), date.getMinutes(), date.getSeconds()]
-
-    return `${day}/${month}/${year} at ${hour}:${minutes}:${seconds}`
+    return moment().fromNow()
 }
 
 function onInputEnter() {
@@ -52,7 +49,15 @@ function renderTodos() {
 
     function showTask(item, index) {
        return `<li class="item list-group-item my-1"> <div class="row">
-            <div class="col-9 d-flex align-items-center"><b class="col-2 edit_text">${item.task} </b> <span class="col-10 text-center"> ${item.createdOn} </span></div>
+            <div class="col-9 d-flex align-items-center">
+            <b class="col-4 edit_text${index}">${item.task}</b>
+            <div class="input-group mb-3 d-none edit-box${index}" id="editInput">
+                <input type="text" class="form-control" id="newEditText" placeholder="Add Task">
+                <button class="btn btn-outline-secondary" type="button" onclick="saveOnEdit(${index})" id="button-addon2">Save</button>
+            </div> 
+            
+            <span class="col-4 text-center"> ${item.createdOn} </span>
+            </div>
             <div class="col-1"><button type="button" onclick="editodo(${index})" class="btn complete-item item-icon"><i class="bi bi-pencil-square"></i></button> </div>
             <div class="col-1"><button type="button" onclick="completedTodo(${index})" class="btn complete-item item-icon"><i class="bi bi-check2-circle"></i></button> </div>
             <div class="col-1"><button type="button" onclick="deleteTodo(${index})" class="btn delete-item text-danger item-icon"><i class="bi bi-x-circle"></i></button></div></div>
@@ -90,10 +95,23 @@ function completedTodo(itemIndex) {
 }
 
 function editodo(itemIndex) {
-    const task = tasks[itemIndex] 
-    let a = document.querySelector(".edit_text")
-    a.contentEditable = "true";
-    task.task = a
-    console.log(task.task = a);
-    tasks[itemIndex] = task
+    
+    const editTextBox = document.querySelector(`.edit_text${itemIndex}`)
+    editTextBox.classList.add('d-none')
+    const editInputBox = document.querySelector(`.edit-box${itemIndex}`)
+    editInputBox.classList.remove('d-none')   
+
+    // const a = document.querySelector("#newEditText")
+    // console.log(a.value);
+}
+
+
+function saveOnEdit(itemIndex){
+    const editInputBox = document.querySelector(`.edit-box${itemIndex} input`)
+    const updatedTask = editInputBox.value
+    tasks[itemIndex].task = updatedTask
+    renderTodos()   
+    // editInputBox.classList.add('d-none')  
+    // const editTextBox = document.querySelector(`.edit_text${itemIndex}`)
+    // editTextBox.classList.remove('d-none') 
 }

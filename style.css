@@ -19,6 +19,6 @@ body{
   color: #8cd6b2;
 }
 
-.visibility {
-  opacity: 0.5;
+.time-font {
+  font-size:10px;
 }
