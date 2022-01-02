@@ -5,7 +5,6 @@ const validtext = document.querySelector("#valid-text")
 const todo_list = document.querySelector(".todo-list")
 const todocompleted = document.querySelector(".todo-done-list")
 
-
 let tasks = []
 
 onInputEnter()
@@ -68,11 +67,12 @@ function renderTodos() {
     let completTaskHtmlList = "";
     
     tasks.forEach((item, index) => {
-        if(item.isDone === true){
-            let htmlCode = showTask(item, index)
+        const {isDone} = item || {}
+        let htmlCode = showTask(item, index)
+
+        if(isDone){
             completTaskHtmlList += htmlCode
         }else{
-            let htmlCode = showTask(item, index)
             tasksHtmlList += htmlCode
         }
     });
@@ -94,6 +94,7 @@ function completedTodo(itemIndex) {
     renderTodos()
 }
 
+
 function editodo(itemIndex) {
     const task = tasks[itemIndex]
     const editTextBox = document.querySelector(`.edit_text${itemIndex}`)
@@ -104,11 +105,10 @@ function editodo(itemIndex) {
 
 
 function saveOnEdit(itemIndex){
+    
     const editInputBox = document.querySelector(`.edit-box${itemIndex} input`)
     const updatedTask = editInputBox.value
     tasks[itemIndex].task = updatedTask
     renderTodos()   
-    // editInputBox.classList.add('d-none')  
-    // const editTextBox = document.querySelector(`.edit_text${itemIndex}`)
-    // editTextBox.classList.remove('d-none') 
+    
 }
